@@ -13,36 +13,32 @@ import java.util.Random;
  * @author Student
  */
 public class BigOSample {
-    private static int N = 10000000;
+    private static int N = 100000;
     private static Random r = new Random();
     public static void main(String[] args) {
-        int[] a1 = new int[N];
-        int[] a2 = new int[N];
-        int[] a3 = new int[N];
-        test5(a1);
-        System.arraycopy(a1,0,a2,0,a1.length);
-        System.arraycopy(a1,0,a3,0,a1.length);
-        
-        long begin = System.currentTimeMillis();
-        
+        Integer[] a1 = new Integer[N];
+        Integer[] a2 = new Integer[N];
+        Integer[] a3 = new Integer[N];
+        Integer[] a4 = new Integer[N];
+        initial(a1);
+        System.arraycopy(a1, 0, a2, 0, a1.length);
+        System.arraycopy(a1, 0, a3, 0, a1.length);
+        System.arraycopy(a1, 0, a4, 0, a1.length);
+
+        long begin;
+        long cal;
+
+        begin = System.currentTimeMillis();
         Arrays.sort(a1);
+        cal = System.currentTimeMillis()-begin;
+        System.out.println("Array.sort time : " + cal);
         
-        System.out.println("Duration:"+(System.currentTimeMillis()-begin)+"milliseconds\n");
+        begin = System.currentTimeMillis();
+        selectionSort(a2);
+        cal = System.currentTimeMillis()-begin;
+        System.out.println("selectionSort time : " + cal);
         
         
-//        Integer[] b1 = new Integer[N];
-//        Integer[] b2 = new Integer[N];
-//        Integer[] b3 = new Integer[N];
-//        initial(b1);
-//        System.arraycopy(b1,0,b2,0,b1.length);
-//        System.arraycopy(b1,0,b3,0,b1.length);
-//        
-//        begin = System.currentTimeMillis();
-//        
-//        Arrays.sort(b1);
-//        
-//        System.out.println("Duration:"+(System.currentTimeMillis()-begin)+"milliseconds\n");
-//             
     }
     
     private static void initial(Integer[] a1){
@@ -52,49 +48,23 @@ public class BigOSample {
         }
     }
     
-    private static void insertionSort(int[] array) {
-  // insertion sort starts from second element
-  for (int i = 1; i < array.length; i++) {
-    int numberToInsert = array[i];
-
-    int compareIndex = i;
-    while (compareIndex > 0 && array[compareIndex - 1] > numberToInsert) {
-       array[compareIndex] = array[compareIndex - 1]; // shifting element
-       compareIndex--; // moving backwards, towards index 0
-    }
-
-    // compareIndex now denotes proper place for number to be sorted
-     array[compareIndex] = numberToInsert;
-   }
- }
+    static void selectionSort(Integer items[]) {
+ 
+        // select item one by one based on index
+        for (int i = 0; i < items.length - 1; i++) {
+            // Find the minimum item in unsorted array
+            int min_idx = i;
+            for (int j = i + 1; j < items.length; j++)
+                if (items[j] < items[min_idx])
+                    min_idx = j;
+ 
+            // Swap the found minimum selected item with
+            // the first selected item
+            int temp = items[min_idx];
+            items[min_idx] = items[i];
+            items[i] = temp;
+        }
     
-    private static void test1(int[] array) {
-  for (int i = 0; i < array.length; ++i) {
-    array[i] = r.nextInt(N);
- }
     }
+}
 
-    private static void test2(int[] array) {
-  for (int i = 1; i < array.length; i*=2) {
-    array[i] = r.nextInt(N);
- }
-    }
-
-        private static void test3(int[] array) {
-  for (int i = array.length-1; i != 0; i/=2) {
-    array[i] = r.nextInt(N);
- }
-    }
-    private static void test4(int[] array) {
-  for (int i = 0; i < array.length; ++i) {
-      if(i%2==0)
-    array[i] = r.nextInt(N);
- }
-    }
-    private static void test5(int[] array) {
-  for (int i = 0; i < array.length; ++i) {
-      for (int j = i; j < array.length; ++j){
-    array[i] = r.nextInt(N);
-      }
- }
-    }}
