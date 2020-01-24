@@ -31,12 +31,12 @@ public class BigOSample {
         begin = System.currentTimeMillis();
         Arrays.sort(a1);
         cal = System.currentTimeMillis()-begin;
-        System.out.println("Array.sort time : " + cal);
+        System.out.println("Array.sort time : " + cal +" Millisecond");
         
         begin = System.currentTimeMillis();
         selectionSort(a2);
         cal = System.currentTimeMillis()-begin;
-        System.out.println("selectionSort time : " + cal);
+        System.out.println("selectionSort time : " + cal +" Millisecond");
         
         
     }
