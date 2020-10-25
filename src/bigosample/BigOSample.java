@@ -101,6 +101,36 @@ public class BigOSample {
         cal = end - begin;
         System.out.println("TIME FOR INSERT SORT : " + cal);
     }
+
+    public static void runMergeSort(){
+        Integer[] a1 = new Integer[N];
+        Integer[] a2 = new Integer[N];
+        Integer[] a3 = new Integer[N];
+        Integer[] a4 = new Integer[N];
+        initial(a1);
+        System.arraycopy(a1, 0, a2, 0, a1.length);
+        System.arraycopy(a1, 0, a3, 0, a1.length);
+        System.arraycopy(a1, 0, a4, 0, a1.length);
+
+        long begin;
+        long end;
+        long cal;
+
+        begin = System.currentTimeMillis();
+        Arrays.sort(a2);
+        end = System.currentTimeMillis();
+        cal = end - begin;
+        System.out.println("TIME FOR ARRAY SORT : " + cal);
+
+        begin = System.currentTimeMillis();
+        mergeSort(a2);
+        end = System.currentTimeMillis();
+        cal = end - begin;
+        System.out.println("TIME FOR MERGE SORT : " + cal);
+    }
+
+
+
     
     static void selectionSort(Integer items[]) {
  
@@ -153,5 +183,55 @@ public class BigOSample {
             }
         }
     }
+
+    static void mergeSort(int[] array, int left, int right) {
+        if (right <= left) return;
+        int mid = (left+right)/2;
+        mergeSort(array, left, mid);
+        mergeSort(array, mid+1, right);
+        merge(array, left, mid, right);
+        
+    void merge(int[] array, int left, int mid, int right) {
+            // calculating lengths
+            int lengthLeft = mid - left + 1;
+            int lengthRight = right - mid;
+        
+            int leftArray[] = new int [lengthLeft];
+            int rightArray[] = new int [lengthRight];
+        
+            for (int i = 0; i < lengthLeft; i++)
+                leftArray[i] = array[left+i];
+            for (int i = 0; i < lengthRight; i++)
+                rightArray[i] = array[mid+i+1];
+        
+            int leftIndex = 0;
+            int rightIndex = 0;
+        
+            for (int i = left; i < right + 1; i++) {
+                // if there are still uncopied elements in R and L, copy minimum of the two
+                if (leftIndex < lengthLeft && rightIndex < lengthRight) {
+                    if (leftArray[leftIndex] < rightArray[rightIndex]) {
+                        array[i] = leftArray[leftIndex];
+                        leftIndex++;
+                    }
+                    else {
+                        array[i] = rightArray[rightIndex];
+                        rightIndex++;
+                    }
+                }
+                // if all the elements have been copied from rightArray, copy the rest of leftArray
+                else if (leftIndex < lengthLeft) {
+                    array[i] = leftArray[leftIndex];
+                    leftIndex++;
+                }
+                // if all the elements have been copied from leftArray, copy the rest of rightArray
+                else if (rightIndex < lengthRight) {
+                    array[i] = rightArray[rightIndex];
+                    rightIndex++;
+                }
+            }
+        }
+    }
+
 }
 
